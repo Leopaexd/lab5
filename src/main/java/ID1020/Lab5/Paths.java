@@ -1,9 +1,9 @@
 package ID1020.Lab5;
 
 import se.kth.id1020.Graph;
-import se.kth.id1020.Vertex;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import se.kth.id1020.DataSource;
 import se.kth.id1020.Edge;
@@ -14,19 +14,31 @@ public class Paths {
  // work on g
  
  ArrayList<Integer>	marked = new ArrayList<Integer>(); //Used to keep track of visited vertices
+ ArrayList<ArrayList<Integer>>	subGraphs = new ArrayList<ArrayList<Integer>>(); //Used to keep track of subgraphs
  
- System.out.println(DepthFirstSearch (g, marked, 0));
+ for (int j = 0; j < g.numberOfVertices()-1; j++) { //Check if there are any vertices missing
+	if (marked.contains(j) == false) {
+		subGraphs.add(new ArrayList<Integer>());
+		DepthFirstSearch(g, marked, j,subGraphs.get(subGraphs.size()-1)); 
+	}
+	//Add the subgraph reached from vertex j, which has yet been visited
+}
+ 
+ for (int i = 0; i < subGraphs.size(); i++) {
+	System.out.println("Subgraph: " + i + " " +subGraphs.get(i));
+}
+ 
+ System.out.println("Marked.size = " + marked.size() + " numberOfVertices = " + g.numberOfVertices());
+ System.out.println("Number of subgraphs: " + subGraphs.size());
  }
  
-//Depth-First Search, returns true if graph is connected, else returns false
- public static boolean DepthFirstSearch (Graph g, ArrayList<Integer> marked, int current) {
-	 System.out.println(marked);
+ 
+//Depth-First Search, returns ArrayList of all vertices connected to input vertex
+ public static void DepthFirstSearch (Graph g, ArrayList<Integer> marked, int current, ArrayList<Integer> subGraph) {
 	 marked.add(current);
+	 subGraph.add(current);
 	 for (Edge edge : g.adj(current)) {
-		 if(marked.contains(edge.to) == false) DepthFirstSearch(g, marked,edge.to);
+		 if(marked.contains(edge.to) == false) DepthFirstSearch(g, marked,edge.to, subGraph);
 	 }
-	 if (marked.size() == g.numberOfVertices()) return true;
-	 System.out.println("Marked.size = " + marked.size() + " numberOfVertices = " + g.numberOfVertices());
-	 return false;
  }
 }
