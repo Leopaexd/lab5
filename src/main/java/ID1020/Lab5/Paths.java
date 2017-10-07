@@ -3,7 +3,6 @@ package ID1020.Lab5;
 import se.kth.id1020.Graph;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import se.kth.id1020.DataSource;
 import se.kth.id1020.Edge;
@@ -21,7 +20,6 @@ public class Paths {
 		subGraphs.add(new ArrayList<Integer>());
 		DepthFirstSearch(g, marked, j,subGraphs.get(subGraphs.size()-1)); 
 	}
-	//Add the subgraph reached from vertex j, which has yet been visited
 }
  
  for (int i = 0; i < subGraphs.size(); i++) {
